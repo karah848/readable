@@ -7,7 +7,6 @@ class UserCreator
 
     private array $permissions;
     private string $permission;
-    private bool $permissionValue;
     private User $user;
 
     public function __construct(UserRepository $userRepository, UserData $userData)
@@ -45,13 +44,13 @@ class UserCreator
 
     private function addPermissions()
     {
-        foreach ($this->permissions as $this->permission => $this->permissionValue) {
+        foreach ($this->permissions as $this->permission) {
             $this->addPermission();
         }
     }
 
     private function addPermission()
     {
-        $this->userRepository->addPermission($this->user->id, $this->permission, $this->permissionValue);
+        $this->userRepository->addPermission($this->user->id, $this->permission);
     }
 }
