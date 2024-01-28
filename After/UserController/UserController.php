@@ -11,8 +11,15 @@ class UserController
 
     public function createUser($data)
     {
-        $guard = new UserGuard($data);
-        $request = new CreateUserRequest($guard, $this->userRepository);
+        $request = new CreateUserRequest($data, $this->userRepository);
+        $request->execute();
+        $user = $request->get();
+        return $user;
+    }
+
+    public function updateUser($data)
+    {
+        $request = new EditUserRequest($data, $this->userRepository);
         $request->execute();
         $user = $request->get();
         return $user;

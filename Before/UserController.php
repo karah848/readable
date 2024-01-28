@@ -17,7 +17,19 @@ class UserController
         return $user->toArray();
     }
 
+    public function updateUser($data)
+    {
+        $this->validateEmail($data["email"]);
+        if (!isset($data["permissions"]) || empty($data["permissions"])) {
+            throw new Exception("Permissions are required");
+        }
+        $handler = new UserHandler();
+        $user = $handler->edit($this->userRepository, $data["id"], $data["email"], $data["fullname"], $data["permissions"]);
+        return $user->toArray();
+    }
+
     private function validateEmail()
     {
+        // do stuff
     }
 }
