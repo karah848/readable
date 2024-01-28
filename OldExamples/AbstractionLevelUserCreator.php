@@ -34,11 +34,11 @@ class UserCreator
 
     private function addDefaultPermissions()
     {
-        $this->getDefaultPermissions();
+        $this->setDefaultPermissions();
         $this->addPermissions();
     }
 
-    private function getDefaultPermissions()
+    private function setDefaultPermissions()
     {
         $this->permissions = User::DEFAULT_PERMISSIONS;
     }

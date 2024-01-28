@@ -2,15 +2,16 @@
 
 class CreateUserRequest implements CommandRequestInterface, QueryRequestInterface
 {
-    private $guard;
+    private $data;
     private $userRepository;
 
-    private $data;
+    private $guard;
+    private $userData;
     private $user;
 
-    public function __construct(UserGuard $guard, UserRepository $userRepository)
+    public function __construct(array $data, UserRepository $userRepository)
     {
-        $this->guard = $guard;
+        $this->data = $data;
         $this->userRepository = $userRepository;
     }
 
@@ -29,17 +30,18 @@ class CreateUserRequest implements CommandRequestInterface, QueryRequestInterfac
 
     private function validateData(): void
     {
+        $this->guard = new UserGuard($this->userData);
         $this->guard->validate();
     }
 
     private function getSanitizedData(): void
     {
-        $this->data = $this->guard->getSanitizedData();
+        $this->userData = $this->guard->getSanitizedData();
     }
 
     private function createUser(): void
     {
-        $creator = new UserCreator($this->userRepository, $this->data);
+        $creator = new UserCreator($this->userRepository, $this->userData);
         $this->user = $creator->create();
     }
 
